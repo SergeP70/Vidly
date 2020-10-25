@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Vidly.Models;
+using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
@@ -20,6 +21,7 @@ namespace Vidly.Controllers
             _context.Dispose();    
         }
 
+
         // GET: Customers
         public ActionResult Index()
         {
@@ -27,6 +29,7 @@ namespace Vidly.Controllers
             
             return View(customers);
         }
+
 
         // GET: Customers/Details/1
         public ActionResult Details(int id)
@@ -38,24 +41,19 @@ namespace Vidly.Controllers
             }
 
             return View(customer);
-
-
         }
 
-        private IEnumerable<Customer> GetCustomers()
-        {
-            //return null;
-            return new List<Customer>
-            {
-                new Customer { Id = 0, Name= "Serge Pille"},
-                new Customer { Id = 1, Name= "Emilie Pille"},
-                new Customer { Id = 2, Name= "Arthur Pille"},
-                new Customer { Id = 3, Name= "Annelies Nys"},
-                new Customer { Id = 4, Name= "Peter Verdonck"},
-                new Customer { Id = 5, Name= "Bart Pattyn"},
 
+        public ActionResult New()
+        {
+            var membershipTypes = _context.MembershipTypes.ToList();
+
+            var viewModel = new NewCustomerViewModel()
+            {
+                MembershipTypes = membershipTypes
             };
 
+            return View(viewModel);
         }
     }
 }
